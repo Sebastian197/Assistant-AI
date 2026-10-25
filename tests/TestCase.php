@@ -14,6 +14,16 @@ abstract class TestCase extends BaseTestCase
     protected const TESTING_DATABASE = 'assistant_ai_testing';
 
     /**
+     * Render views without a Vite manifest, which the PHP test job never builds.
+     */
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->withoutVite();
+    }
+
+    /**
      * Check the database before any trait runs, because RefreshDatabase
      * wipes the database it points at while setting up its trait.
      *
