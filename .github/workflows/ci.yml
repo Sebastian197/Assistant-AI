@@ -44,6 +44,9 @@ jobs:
       - name: Check code style
         run: vendor/bin/pint --test
 
+      - name: Run static analysis
+        run: vendor/bin/phpstan analyse --no-progress
+
   tests:
     name: Tests (PHP ${{ matrix.php }})
     runs-on: ubuntu-latest
