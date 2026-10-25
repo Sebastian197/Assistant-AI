@@ -158,14 +158,18 @@ This project has domain-specific skills available in `**/skills/**`. You MUST ac
 
 ## Environments
 
-- Local: served by Laravel Herd at http://assistant-ai.test (PHP 8.5).
-- Claude Code on the web (claude.ai/code): there is NO Herd and PHP is 8.3.
-  The Herd rules above apply only locally. `scripts/cloud-setup.sh` runs on
-  session start (only when `CLAUDE_CODE_REMOTE=true`): it installs Composer
-  and npm dependencies, creates `.env` and migrates SQLite. To serve the app
-  there, use `php artisan serve`.
-- `composer.json` pins `config.platform.php` to 8.3.0 so the lockfile installs
-  in both places. Do not remove it while the cloud image is on PHP 8.3.
+- Local: served by Laravel Herd at http://assistant-ai.test (PHP 8.5), with
+  PostgreSQL 16 from Postgres.app.
+- Claude Code on the web (claude.ai/code): there is NO Herd. The Herd rules
+  above apply only locally. `scripts/cloud-setup.sh` runs on session start and
+  resume (only when `CLAUDE_CODE_REMOTE=true`): it installs PHP 8.5, PostgreSQL
+  16 with pgvector, Composer and npm dependencies, configures `.env` and
+  migrates. To serve the app there, use `php artisan serve`.
+- In cloud sessions npm may bypass the proxy. Prefix npm commands with the
+  `NO_PROXY` value the setup script uses, and set `NODE_USE_ENV_PROXY=1` for
+  `npm run build`.
+- `composer.json` pins `config.platform.php` to 8.5.0 so the lockfile resolves
+  the same everywhere.
 
 ## Conventions
 
