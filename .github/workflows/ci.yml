@@ -149,6 +149,9 @@ jobs:
 
       - name: Run frontend tests
         run: npm test
+        env:
+          # Vitest starts Vite in serve mode, which laravel-vite-plugin refuses when CI is set.
+          LARAVEL_BYPASS_ENV_CHECK: 1
 
       - name: Build assets
         run: npm run build
