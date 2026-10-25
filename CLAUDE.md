@@ -159,7 +159,13 @@ This project has domain-specific skills available in `**/skills/**`. You MUST ac
 ## Environments
 
 - Local: served by Laravel Herd at http://assistant-ai.test (PHP 8.5), with
-  PostgreSQL 16 from Postgres.app.
+  Homebrew `postgresql@17` on port 5432, shared with other local projects.
+  The database user is the macOS user, not `postgres`. Homebrew has no
+  pgvector bottle for this macOS, so pgvector is built from source against
+  `postgresql@17` and must be rebuilt after upgrading it:
+  `git clone --depth 1 --branch v0.8.7 https://github.com/pgvector/pgvector.git`,
+  then `make` and `make install`, both with
+  `PG_CONFIG=/usr/local/opt/postgresql@17/bin/pg_config`.
 - Claude Code on the web (claude.ai/code): there is NO Herd. The Herd rules
   above apply only locally. `scripts/cloud-setup.sh` runs on session start and
   resume (only when `CLAUDE_CODE_REMOTE=true`): it installs PHP 8.5, PostgreSQL
