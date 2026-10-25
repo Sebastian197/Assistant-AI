@@ -180,3 +180,4 @@ This project has domain-specific skills available in `**/skills/**`. You MUST ac
 ## Conventions
 
 - Code, comments and commit messages in English; Conventional Commits.
+- Frontend checks: npm run lint, npm run format:check, npm run typecheck and npm test. Wayfinder output in resources/js/{actions,routes,wayfinder} is generated and git-ignored.
