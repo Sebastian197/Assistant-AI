@@ -6,16 +6,6 @@ use Tests\TestCase;
 
 class SpaRoutesTest extends TestCase
 {
-    /**
-     * Render views without a Vite manifest, which the PHP test job does not build.
-     */
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $this->withoutVite();
-    }
-
     public function test_home_renders_the_spa_shell(): void
     {
         $response = $this->get('/');

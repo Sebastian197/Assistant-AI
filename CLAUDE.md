@@ -171,9 +171,12 @@ This project has domain-specific skills available in `**/skills/**`. You MUST ac
   resume (only when `CLAUDE_CODE_REMOTE=true`): it installs PHP 8.5, PostgreSQL
   16 with pgvector, Composer and npm dependencies, configures `.env` and
   migrates. To serve the app there, use `php artisan serve`.
-- In cloud sessions npm may bypass the proxy. Prefix npm commands with the
-  `NO_PROXY` value the setup script uses, and set `NODE_USE_ENV_PROXY=1` for
-  `npm run build`.
+- In cloud sessions the environment presets `npm_config_noproxy` with the npm
+  registry, so npm bypasses the proxy and fails with ENOTFOUND. Run npm with
+  `npm_config_noproxy` set to that list without the `npmjs` and `jsr.io` hosts,
+  as `scripts/cloud-setup.sh` does, and set `NODE_USE_ENV_PROXY=1` for
+  `npm run build` and `npm test`.
+- Node: CI runs the latest Node 22. jsdom 30 needs Node 22.22.2 or later.
 - `composer.json` pins `config.platform.php` to 8.5.0 so the lockfile resolves
   the same everywhere.
 

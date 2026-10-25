@@ -124,10 +124,11 @@ configure_env() {
   set_env DB_PASSWORD postgres
 }
 
-# The session NO_PROXY sends npm straight to the registry, which has no
-# direct route out, so npm runs with those registries removed from it.
+# The session presets npm_config_noproxy (and NO_PROXY) with the npm registry,
+# which sends npm straight to a host it cannot resolve. npm reads its own
+# variable rather than NO_PROXY, so both are set without those registries.
 npm_no_proxy() {
-  echo "${NO_PROXY:-}" | tr ',' '\n' | grep -v -e 'npmjs' -e 'jsr\.io' | paste -sd, -
+  echo "${npm_config_noproxy:-${NO_PROXY:-}}" | tr ',' '\n' | { grep -v -e 'npmjs' -e 'jsr\.io' || true; } | paste -sd, -
 }
 
 install_php
@@ -139,4 +140,5 @@ configure_env
 php artisan migrate --no-interaction --force
 
 npm_proxy_exclusions="$(npm_no_proxy)"
-NO_PROXY="$npm_proxy_exclusions" no_proxy="$npm_proxy_exclusions" npm ci --no-audit --no-fund
+NO_PROXY="$npm_proxy_exclusions" no_proxy="$npm_proxy_exclusions" npm_config_noproxy="$npm_proxy_exclusions" \
+  npm ci --no-audit --no-fund
