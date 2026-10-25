@@ -9,6 +9,7 @@
         "typecheck": "vue-tsc --noEmit"
     },
     "devDependencies": {
+        "@laravel/vite-plugin-wayfinder": "^0.1.11",
         "@tailwindcss/vite": "^4.0.0",
         "@vitejs/plugin-vue": "^6.0.10",
         "@vue/test-utils": "^2.5.1",
